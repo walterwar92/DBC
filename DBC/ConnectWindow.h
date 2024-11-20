@@ -12,7 +12,7 @@ namespace DBC {
 	using namespace System::Data::SqlClient;
 	using namespace DBC;
 	/// <summary>
-	/// Сводка для ConnectWindow
+	/// РЎРІРѕРґРєР° РґР»СЏ ConnectWindow
 	/// </summary>
 
 
@@ -25,13 +25,13 @@ namespace DBC {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~ConnectWindow()
 		{
@@ -53,14 +53,14 @@ namespace DBC {
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -97,7 +97,7 @@ namespace DBC {
 			this->btnClick_Connect->Name = L"btnClick_Connect";
 			this->btnClick_Connect->Size = System::Drawing::Size(134, 23);
 			this->btnClick_Connect->TabIndex = 2;
-			this->btnClick_Connect->Text = L"Подключится";
+			this->btnClick_Connect->Text = L"РџРѕРґРєР»СЋС‡РёС‚СЃСЏ";
 			this->btnClick_Connect->UseVisualStyleBackColor = true;
 			this->btnClick_Connect->Click += gcnew System::EventHandler(this, &ConnectWindow::btnClick_Connect_Click);
 			// 
@@ -108,7 +108,7 @@ namespace DBC {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(40, 13);
 			this->label1->TabIndex = 3;
-			this->label1->Text = L"Логин";
+			this->label1->Text = L"Р›РѕРіРёРЅ";
 			// 
 			// label2
 			// 
@@ -117,7 +117,7 @@ namespace DBC {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(47, 13);
 			this->label2->TabIndex = 4;
-			this->label2->Text = L"Пароль";
+			this->label2->Text = L"РџР°СЂРѕР»СЊ";
 			this->label2->Click += gcnew System::EventHandler(this, &ConnectWindow::label2_Click);
 			// 
 			// txt_server
@@ -134,7 +134,7 @@ namespace DBC {
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(46, 13);
 			this->label3->TabIndex = 6;
-			this->label3->Text = L"Сервер";
+			this->label3->Text = L"РЎРµСЂРІРµСЂ";
 			// 
 			// ConnectWindow
 			// 
@@ -174,17 +174,17 @@ private: System::Void btnClick_Connect_Click(System::Object^ sender, System::Eve
 	String^ password = txt_passwd->Text;
 	connectingstring = "Data Source=" + Server + ";User ID=" + login + ";Password=" + password + ";";
 	try {
-		// Проверяем соединение
+		// РџСЂРѕРІРµСЂСЏРµРј СЃРѕРµРґРёРЅРµРЅРёРµ
 		connection = gcnew SqlConnection(connectingstring);
 		connection->Open();
 		this->Hide();
-		MessageBox::Show("Подключение успешно!", "Успех", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("РџРѕРґРєР»СЋС‡РµРЅРёРµ СѓСЃРїРµС€РЅРѕ!", "РЈСЃРїРµС…", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		
 		MainWindow^ window = gcnew MainWindow(connection);
 		window->Show();
 
 	} catch (Exception^ ex) {
-		MessageBox::Show("Ошибка подключения: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("РћС€РёР±РєР° РїРѕРґРєР»СЋС‡РµРЅРёСЏ: " + ex->Message, "РћС€РёР±РєР°", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
 };
