@@ -1,5 +1,4 @@
-
-
+#include <fstream>
 #include "ConnectWindow.h"
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -11,10 +10,11 @@ namespace DBC {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO;
 	using namespace System::Data::SqlClient;
 	using namespace DBC;
 	/// <summary>
-	/// ������ ��� MainWindow
+	/// Сводка для MainWindow
 	/// </summary>
 	public ref class MainWindow : public System::Windows::Forms::Form
 	{
@@ -27,7 +27,7 @@ namespace DBC {
 
 	protected:
 		/// <summary>
-		/// ���������� ��� ������������ �������.
+		/// Освободить все используемые ресурсы.
 		/// </summary>
 		~MainWindow()
 		{
@@ -80,6 +80,16 @@ namespace DBC {
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::Button^ refresh;
 	private: System::Windows::Forms::Button^ close_btn;
+	private: System::Windows::Forms::Button^ to_csv_btn;
+
+	private: System::Windows::Forms::Button^ to_txt_btn;
+
+	private: System::Windows::Forms::TextBox^ string_sep;
+
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::TextBox^ outputFilePath;
+	private: System::Windows::Forms::Label^ label10;
+
 
 	protected:
 
@@ -87,14 +97,14 @@ namespace DBC {
 
 	private:
 		/// <summary>
-		/// ������������ ���������� ������������.
+		/// Обязательная переменная конструктора.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// ��������� ����� ��� ��������� ������������ � �� ��������� 
-		/// ���������� ����� ������ � ������� ��������� ����.
+		/// Требуемый метод для поддержки конструктора — не изменяйте 
+		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -124,6 +134,12 @@ namespace DBC {
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->refresh = (gcnew System::Windows::Forms::Button());
 			this->close_btn = (gcnew System::Windows::Forms::Button());
+			this->to_csv_btn = (gcnew System::Windows::Forms::Button());
+			this->to_txt_btn = (gcnew System::Windows::Forms::Button());
+			this->string_sep = (gcnew System::Windows::Forms::TextBox());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->outputFilePath = (gcnew System::Windows::Forms::TextBox());
+			this->label10 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -133,7 +149,7 @@ namespace DBC {
 			this->CreateTable_btn->Name = L"CreateTable_btn";
 			this->CreateTable_btn->Size = System::Drawing::Size(75, 23);
 			this->CreateTable_btn->TabIndex = 2;
-			this->CreateTable_btn->Text = L"�������";
+			this->CreateTable_btn->Text = L"Создать";
 			this->CreateTable_btn->UseVisualStyleBackColor = true;
 			this->CreateTable_btn->Click += gcnew System::EventHandler(this, &MainWindow::CreateTable_btn_Click);
 			// 
@@ -144,7 +160,7 @@ namespace DBC {
 			this->Create_label->Name = L"Create_label";
 			this->Create_label->Size = System::Drawing::Size(145, 13);
 			this->Create_label->TabIndex = 1;
-			this->Create_label->Text = L"�������\\������� �������";
+			this->Create_label->Text = L"Создать\\выбрать таблицу";
 			this->Create_label->Click += gcnew System::EventHandler(this, &MainWindow::label1_Click);
 			// 
 			// Table_txt
@@ -184,7 +200,7 @@ namespace DBC {
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(29, 13);
 			this->label1->TabIndex = 6;
-			this->label1->Text = L"���";
+			this->label1->Text = L"Имя";
 			this->label1->Click += gcnew System::EventHandler(this, &MainWindow::label1_Click_1);
 			// 
 			// label2
@@ -194,7 +210,7 @@ namespace DBC {
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(49, 13);
 			this->label2->TabIndex = 7;
-			this->label2->Text = L"�������";
+			this->label2->Text = L"Возраст";
 			// 
 			// label3
 			// 
@@ -203,7 +219,7 @@ namespace DBC {
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(92, 13);
 			this->label3->TabIndex = 8;
-			this->label3->Text = L"���� ��������";
+			this->label3->Text = L"День рождения";
 			// 
 			// add_btn
 			// 
@@ -211,7 +227,7 @@ namespace DBC {
 			this->add_btn->Name = L"add_btn";
 			this->add_btn->Size = System::Drawing::Size(165, 23);
 			this->add_btn->TabIndex = 9;
-			this->add_btn->Text = L"�������� ������";
+			this->add_btn->Text = L"Добавить запись";
 			this->add_btn->UseVisualStyleBackColor = true;
 			this->add_btn->Click += gcnew System::EventHandler(this, &MainWindow::add_btn_Click);
 			// 
@@ -222,7 +238,7 @@ namespace DBC {
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(59, 13);
 			this->label4->TabIndex = 10;
-			this->label4->Text = L"��������";
+			this->label4->Text = L"Добавить";
 			// 
 			// Name_txt_search
 			// 
@@ -237,7 +253,7 @@ namespace DBC {
 			this->Name_search_btn->Name = L"Name_search_btn";
 			this->Name_search_btn->Size = System::Drawing::Size(113, 23);
 			this->Name_search_btn->TabIndex = 12;
-			this->Name_search_btn->Text = L"�� �����";
+			this->Name_search_btn->Text = L"По имени";
 			this->Name_search_btn->UseVisualStyleBackColor = true;
 			this->Name_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::Name_search_btn_Click);
 			// 
@@ -261,7 +277,7 @@ namespace DBC {
 			this->Age_search_btn->Name = L"Age_search_btn";
 			this->Age_search_btn->Size = System::Drawing::Size(113, 23);
 			this->Age_search_btn->TabIndex = 15;
-			this->Age_search_btn->Text = L"�� ��������";
+			this->Age_search_btn->Text = L"по возрасту";
 			this->Age_search_btn->UseVisualStyleBackColor = true;
 			this->Age_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::Age_search_btn_Click);
 			// 
@@ -271,7 +287,7 @@ namespace DBC {
 			this->bithday_search_btn->Name = L"bithday_search_btn";
 			this->bithday_search_btn->Size = System::Drawing::Size(113, 23);
 			this->bithday_search_btn->TabIndex = 16;
-			this->bithday_search_btn->Text = L"�� ��� ��������";
+			this->bithday_search_btn->Text = L"по дню рождения";
 			this->bithday_search_btn->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			this->bithday_search_btn->UseVisualStyleBackColor = true;
 			this->bithday_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::bithday_search_btn_Click);
@@ -283,7 +299,7 @@ namespace DBC {
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(103, 13);
 			this->label5->TabIndex = 17;
-			this->label5->Text = L"����� �� �������";
+			this->label5->Text = L"Поиск по столбцу";
 			// 
 			// label6
 			// 
@@ -292,7 +308,7 @@ namespace DBC {
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(101, 13);
 			this->label6->TabIndex = 18;
-			this->label6->Text = L"������� �� �����";
+			this->label6->Text = L"Удалить по ключу";
 			// 
 			// Id_txt_delete
 			// 
@@ -316,7 +332,7 @@ namespace DBC {
 			this->Delete_btn->Name = L"Delete_btn";
 			this->Delete_btn->Size = System::Drawing::Size(100, 23);
 			this->Delete_btn->TabIndex = 21;
-			this->Delete_btn->Text = L"�������";
+			this->Delete_btn->Text = L"Удалить";
 			this->Delete_btn->UseVisualStyleBackColor = true;
 			this->Delete_btn->Click += gcnew System::EventHandler(this, &MainWindow::Delete_btn_Click);
 			// 
@@ -352,6 +368,60 @@ namespace DBC {
 			this->close_btn->UseVisualStyleBackColor = true;
 			this->close_btn->Click += gcnew System::EventHandler(this, &MainWindow::button1_Click);
 			// 
+			// to_csv_btn
+			// 
+			this->to_csv_btn->Location = System::Drawing::Point(93, 282);
+			this->to_csv_btn->Name = L"to_csv_btn";
+			this->to_csv_btn->Size = System::Drawing::Size(75, 23);
+			this->to_csv_btn->TabIndex = 26;
+			this->to_csv_btn->Text = L"to .csv";
+			this->to_csv_btn->UseVisualStyleBackColor = true;
+			this->to_csv_btn->Click += gcnew System::EventHandler(this, &MainWindow::to_csv_btn_Click);
+			// 
+			// to_txt_btn
+			// 
+			this->to_txt_btn->Location = System::Drawing::Point(12, 282);
+			this->to_txt_btn->Name = L"to_txt_btn";
+			this->to_txt_btn->Size = System::Drawing::Size(75, 23);
+			this->to_txt_btn->TabIndex = 27;
+			this->to_txt_btn->Text = L"to .txt";
+			this->to_txt_btn->UseVisualStyleBackColor = true;
+			this->to_txt_btn->Click += gcnew System::EventHandler(this, &MainWindow::to_txt_btn_Click);
+			// 
+			// string_sep
+			// 
+			this->string_sep->Location = System::Drawing::Point(12, 230);
+			this->string_sep->Name = L"string_sep";
+			this->string_sep->Size = System::Drawing::Size(75, 22);
+			this->string_sep->TabIndex = 29;
+			this->string_sep->TextChanged += gcnew System::EventHandler(this, &MainWindow::string_sep_TextChanged);
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(93, 233);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(125, 13);
+			this->label9->TabIndex = 31;
+			this->label9->Text = L"Знак между ячейками";
+			this->label9->Click += gcnew System::EventHandler(this, &MainWindow::label9_Click);
+			// 
+			// outputFilePath
+			// 
+			this->outputFilePath->Location = System::Drawing::Point(12, 258);
+			this->outputFilePath->Name = L"outputFilePath";
+			this->outputFilePath->Size = System::Drawing::Size(100, 22);
+			this->outputFilePath->TabIndex = 32;
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Location = System::Drawing::Point(118, 261);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(104, 13);
+			this->label10->TabIndex = 33;
+			this->label10->Text = L"Точка сохранения";
+			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -361,6 +431,12 @@ namespace DBC {
 			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
 			this->ClientSize = System::Drawing::Size(729, 569);
 			this->ControlBox = false;
+			this->Controls->Add(this->label10);
+			this->Controls->Add(this->outputFilePath);
+			this->Controls->Add(this->label9);
+			this->Controls->Add(this->string_sep);
+			this->Controls->Add(this->to_txt_btn);
+			this->Controls->Add(this->to_csv_btn);
 			this->Controls->Add(this->close_btn);
 			this->Controls->Add(this->refresh);
 			this->Controls->Add(this->dataGridView1);
@@ -453,30 +529,69 @@ private: void RefreshDataGridView(DataGridView^ dataGridView)
 private: System::Void add_btn_Click(System::Object^ sender, System::EventArgs^ e) {
 	try
 	{
-		// Prepare the SQL insert command
+		// Преобразование даты рождения
+		DateTime dateOfBirth = DateTime::Parse(birthday_txt_add->Text);
+		int providedAge = Convert::ToInt32(Age_txt_add->Text);
+
+		// Текущий год
+		int currentYear = DateTime::Now.Year;
+
+		// Расчет возраста на основе года рождения
+		int calculatedAge = currentYear - dateOfBirth.Year;
+
+		// Учитываем, был ли уже день рождения в этом году
+		if (DateTime::Now < dateOfBirth.AddYears(calculatedAge))
+		{
+			calculatedAge--;
+		}
+
+		// Проверка совпадения возраста
+		if (providedAge != calculatedAge)
+		{
+			MessageBox::Show("Возраст и дата рождения не совпадают. Проверьте введенные данные.",
+				"Ошибка",
+				MessageBoxButtons::OK,
+				MessageBoxIcon::Error);
+			return; // Прекращаем выполнение, если данные некорректны
+		}
+
+		// Подготовка команды для вставки данных
 		String^ insertQuery = "INSERT INTO " + Table_txt->Text + " (Name, Age, DateOfBirth) VALUES (@Name, @Age, @DateOfBirth);";
 		SqlCommand^ sqlCommand = gcnew SqlCommand(insertQuery, connection);
 
-		// Add parameters
+		// Добавление параметров
 		sqlCommand->Parameters->AddWithValue("@Name", Name_txt_add->Text);
-		sqlCommand->Parameters->AddWithValue("@Age", Convert::ToInt32(Age_txt_add->Text));
-		sqlCommand->Parameters->AddWithValue("@DateOfBirth", DateTime::Parse(birthday_txt_add->Text));
+		sqlCommand->Parameters->AddWithValue("@Age", providedAge);
+		sqlCommand->Parameters->AddWithValue("@DateOfBirth", dateOfBirth);
 
-		// Execute the command
+		// Выполнение команды
 		sqlCommand->ExecuteNonQuery();
-		MessageBox::Show("Data inserted successfully.", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Данные успешно добавлены.",
+			"Успех",
+			MessageBoxButtons::OK,
+			MessageBoxIcon::Information);
+
+		// Обновляем таблицу
 		RefreshDataGridView(dataGridView1);
+
+		// Очищаем поля ввода
 		Name_txt_add->Text = "";
 		Age_txt_add->Text = "";
 		birthday_txt_add->Text = "";
 	}
 	catch (SqlException^ ex)
 	{
-		MessageBox::Show("An error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Произошла ошибка: " + ex->Message,
+			"Ошибка",
+			MessageBoxButtons::OK,
+			MessageBoxIcon::Error);
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("An unexpected error occurred: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Произошла непредвиденная ошибка: " + ex->Message,
+			"Ошибка",
+			MessageBoxButtons::OK,
+			MessageBoxIcon::Error);
 	}
 }
 private: System::Void Name_search_btn_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -596,6 +711,136 @@ private: System::Void refresh_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	Application::Exit();
 }
+private: System::Void to_txt_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	try
+	{
+		// SQL-запрос для получения всех данных из таблицы
+		String^ query = "SELECT ID, Name, Age, DateOfBirth FROM " + Table_txt->Text;
+		SqlCommand^ command = gcnew SqlCommand(query, connection);
+		SqlDataReader^ reader = command->ExecuteReader();
+
+		// Создание файла для записи
+		StreamWriter^ writer = gcnew StreamWriter(outputFilePath->Text);
+
+		// Запись заголовков (имена столбцов)
+		for (int i = 0; i < reader->FieldCount; i++)
+		{
+			writer->Write(reader->GetName(i));
+			if (i < reader->FieldCount - 1)
+				writer->Write(string_sep->Text);
+		}
+		writer->WriteLine();
+
+		// Запись данных из таблицы
+		while (reader->Read())
+		{
+			for (int i = 0; i < reader->FieldCount; i++)
+			{
+				writer->Write(reader->GetValue(i)->ToString());
+				if (i < reader->FieldCount - 1)
+					writer->Write(string_sep->Text);
+			}
+			writer->WriteLine();
+		}
+
+		// Закрытие ресурсов
+		writer->Close();
+		reader->Close();
+
+		MessageBox::Show("Данные успешно экспортированы!", "Успех", MessageBoxButtons::OK, MessageBoxIcon::Information);
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Ошибка: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+}
+private: System::Void string_sep_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label8_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label9_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void box_sep_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void to_csv_btn_Click(System::Object^ sender, System::EventArgs^ e) {
+	SqlDataReader^ reader = nullptr;
+	try
+	{
+		// Проверяем наличие текста в Table_txt и outputFilePath
+		if (String::IsNullOrWhiteSpace(Table_txt->Text) || String::IsNullOrWhiteSpace(outputFilePath->Text))
+		{
+			MessageBox::Show("Имя таблицы или путь для сохранения файла не указаны.", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		// SQL-запрос для получения всех данных из таблицы
+		String^ query = "SELECT * FROM [" + Table_txt->Text + "]"; // Используем квадратные скобки для имени таблицы
+		SqlCommand^ command = gcnew SqlCommand(query, connection);
+
+		// Выполняем запрос и открываем DataReader
+		reader = command->ExecuteReader();
+
+		// Создание файла для записи
+		StreamWriter^ writer = gcnew StreamWriter(outputFilePath->Text);
+
+		// Запись заголовков (имена столбцов)
+		for (int i = 0; i < reader->FieldCount; i++)
+		{
+			String^ columnName = reader->GetName(i);
+
+			// Оборачиваем имя столбца в кавычки, если оно содержит разделитель
+			if (columnName->Contains(string_sep->Text))
+			{
+				columnName = "\"" + columnName + "\"";
+			}
+			writer->Write(columnName);
+
+			if (i < reader->FieldCount - 1)
+				writer->Write(string_sep->Text); // Разделитель
+		}
+		writer->WriteLine();
+
+		// Запись данных из таблицы
+		while (reader->Read())
+		{
+			for (int i = 0; i < reader->FieldCount; i++)
+			{
+				Object^ value = reader->GetValue(i);
+
+				// Если значение NULL, записываем пустую строку
+				String^ valueStr = (value == DBNull::Value) ? "" : value->ToString();
+
+				// Оборачиваем значение в кавычки, если оно содержит разделитель
+				if (valueStr->Contains(string_sep->Text))
+				{
+					valueStr = "\"" + valueStr + "\"";
+				}
+				writer->Write(valueStr);
+
+				if (i < reader->FieldCount - 1)
+					writer->Write(string_sep->Text); // Разделитель
+			}
+			writer->WriteLine();
+		}
+
+		// Закрытие ресурсов
+		writer->Close();
+	}
+	catch (Exception^ ex)
+	{
+		MessageBox::Show("Ошибка: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	}
+	finally
+	{
+		// Гарантируем, что DataReader закрыт
+		if (reader != nullptr && !reader->IsClosed)
+		{
+			reader->Close();
+		}
+	}
+}
+
+
 };
 }
-#endif // MAINWINDOW_H
+#endif // MAINWINDOW_H/
