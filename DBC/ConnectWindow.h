@@ -97,7 +97,7 @@ namespace DBC {
 			this->btnClick_Connect->Name = L"btnClick_Connect";
 			this->btnClick_Connect->Size = System::Drawing::Size(134, 23);
 			this->btnClick_Connect->TabIndex = 2;
-			this->btnClick_Connect->Text = L"Подключится";
+			this->btnClick_Connect->Text = L"Connect";
 			this->btnClick_Connect->UseVisualStyleBackColor = true;
 			this->btnClick_Connect->Click += gcnew System::EventHandler(this, &ConnectWindow::btnClick_Connect_Click);
 			// 
@@ -106,18 +106,18 @@ namespace DBC {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(257, 35);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(40, 13);
+			this->label1->Size = System::Drawing::Size(35, 13);
 			this->label1->TabIndex = 3;
-			this->label1->Text = L"Логин";
+			this->label1->Text = L"Login";
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(257, 63);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(47, 13);
+			this->label2->Size = System::Drawing::Size(55, 13);
 			this->label2->TabIndex = 4;
-			this->label2->Text = L"Пароль";
+			this->label2->Text = L"Password";
 			this->label2->Click += gcnew System::EventHandler(this, &ConnectWindow::label2_Click);
 			// 
 			// txt_server
@@ -132,17 +132,19 @@ namespace DBC {
 			this->label3->AutoSize = true;
 			this->label3->Location = System::Drawing::Point(257, 7);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(46, 13);
+			this->label3->Size = System::Drawing::Size(39, 13);
 			this->label3->TabIndex = 6;
-			this->label3->Text = L"Сервер";
+			this->label3->Text = L"Server";
+			this->label3->Click += gcnew System::EventHandler(this, &ConnectWindow::label3_Click);
 			// 
 			// ConnectWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
-			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
 			this->ClientSize = System::Drawing::Size(750, 535);
+			this->ControlBox = false;
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->txt_server);
 			this->Controls->Add(this->label2);
@@ -150,14 +152,12 @@ namespace DBC {
 			this->Controls->Add(this->btnClick_Connect);
 			this->Controls->Add(this->txt_passwd);
 			this->Controls->Add(this->txt_login);
-			this->DoubleBuffered = true;
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"ConnectWindow";
 			this->ShowIcon = false;
 			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 			this->Text = L"Login";
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -178,14 +178,16 @@ private: System::Void btnClick_Connect_Click(System::Object^ sender, System::Eve
 		connection = gcnew SqlConnection(connectingstring);
 		connection->Open();
 		this->Hide();
-		MessageBox::Show("Подключение успешно!", "Успех", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Connection successful!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		
 		MainWindow^ window = gcnew MainWindow(connection);
 		window->Show();
 
 	} catch (Exception^ ex) {
-		MessageBox::Show("Ошибка подключения: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Connection error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
+}
+private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

@@ -80,7 +80,7 @@ namespace DBC {
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::Button^ refresh;
 	private: System::Windows::Forms::Button^ close_btn;
-	private: System::Windows::Forms::Button^ to_csv_btn;
+
 
 	private: System::Windows::Forms::Button^ to_txt_btn;
 
@@ -134,7 +134,6 @@ namespace DBC {
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->refresh = (gcnew System::Windows::Forms::Button());
 			this->close_btn = (gcnew System::Windows::Forms::Button());
-			this->to_csv_btn = (gcnew System::Windows::Forms::Button());
 			this->to_txt_btn = (gcnew System::Windows::Forms::Button());
 			this->string_sep = (gcnew System::Windows::Forms::TextBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
@@ -149,18 +148,18 @@ namespace DBC {
 			this->CreateTable_btn->Name = L"CreateTable_btn";
 			this->CreateTable_btn->Size = System::Drawing::Size(75, 23);
 			this->CreateTable_btn->TabIndex = 2;
-			this->CreateTable_btn->Text = L"Создать";
+			this->CreateTable_btn->Text = L"Create";
 			this->CreateTable_btn->UseVisualStyleBackColor = true;
 			this->CreateTable_btn->Click += gcnew System::EventHandler(this, &MainWindow::CreateTable_btn_Click);
 			// 
 			// Create_label
 			// 
 			this->Create_label->AutoSize = true;
-			this->Create_label->Location = System::Drawing::Point(12, 15);
+			this->Create_label->Location = System::Drawing::Point(55, 15);
 			this->Create_label->Name = L"Create_label";
-			this->Create_label->Size = System::Drawing::Size(145, 13);
+			this->Create_label->Size = System::Drawing::Size(102, 13);
 			this->Create_label->TabIndex = 1;
-			this->Create_label->Text = L"Создать\\выбрать таблицу";
+			this->Create_label->Text = L"Create\\select table";
 			this->Create_label->Click += gcnew System::EventHandler(this, &MainWindow::label1_Click);
 			// 
 			// Table_txt
@@ -198,9 +197,9 @@ namespace DBC {
 			this->label1->AutoSize = true;
 			this->label1->Location = System::Drawing::Point(183, 83);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(29, 13);
+			this->label1->Size = System::Drawing::Size(37, 13);
 			this->label1->TabIndex = 6;
-			this->label1->Text = L"Имя";
+			this->label1->Text = L"Name";
 			this->label1->Click += gcnew System::EventHandler(this, &MainWindow::label1_Click_1);
 			// 
 			// label2
@@ -208,18 +207,18 @@ namespace DBC {
 			this->label2->AutoSize = true;
 			this->label2->Location = System::Drawing::Point(183, 111);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(49, 13);
+			this->label2->Size = System::Drawing::Size(27, 13);
 			this->label2->TabIndex = 7;
-			this->label2->Text = L"Возраст";
+			this->label2->Text = L"Age";
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
 			this->label3->Location = System::Drawing::Point(183, 139);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(92, 13);
+			this->label3->Size = System::Drawing::Size(67, 13);
 			this->label3->TabIndex = 8;
-			this->label3->Text = L"День рождения";
+			this->label3->Text = L"DateOfBirth";
 			// 
 			// add_btn
 			// 
@@ -227,7 +226,7 @@ namespace DBC {
 			this->add_btn->Name = L"add_btn";
 			this->add_btn->Size = System::Drawing::Size(165, 23);
 			this->add_btn->TabIndex = 9;
-			this->add_btn->Text = L"Добавить запись";
+			this->add_btn->Text = L"Add data";
 			this->add_btn->UseVisualStyleBackColor = true;
 			this->add_btn->Click += gcnew System::EventHandler(this, &MainWindow::add_btn_Click);
 			// 
@@ -236,9 +235,9 @@ namespace DBC {
 			this->label4->AutoSize = true;
 			this->label4->Location = System::Drawing::Point(15, 61);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(59, 13);
+			this->label4->Size = System::Drawing::Size(54, 13);
 			this->label4->TabIndex = 10;
-			this->label4->Text = L"Добавить";
+			this->label4->Text = L"Add data";
 			// 
 			// Name_txt_search
 			// 
@@ -253,7 +252,7 @@ namespace DBC {
 			this->Name_search_btn->Name = L"Name_search_btn";
 			this->Name_search_btn->Size = System::Drawing::Size(113, 23);
 			this->Name_search_btn->TabIndex = 12;
-			this->Name_search_btn->Text = L"По имени";
+			this->Name_search_btn->Text = L"Name";
 			this->Name_search_btn->UseVisualStyleBackColor = true;
 			this->Name_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::Name_search_btn_Click);
 			// 
@@ -277,7 +276,7 @@ namespace DBC {
 			this->Age_search_btn->Name = L"Age_search_btn";
 			this->Age_search_btn->Size = System::Drawing::Size(113, 23);
 			this->Age_search_btn->TabIndex = 15;
-			this->Age_search_btn->Text = L"по возрасту";
+			this->Age_search_btn->Text = L"Age";
 			this->Age_search_btn->UseVisualStyleBackColor = true;
 			this->Age_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::Age_search_btn_Click);
 			// 
@@ -287,28 +286,27 @@ namespace DBC {
 			this->bithday_search_btn->Name = L"bithday_search_btn";
 			this->bithday_search_btn->Size = System::Drawing::Size(113, 23);
 			this->bithday_search_btn->TabIndex = 16;
-			this->bithday_search_btn->Text = L"по дню рождения";
-			this->bithday_search_btn->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->bithday_search_btn->Text = L"DateOfBirth";
 			this->bithday_search_btn->UseVisualStyleBackColor = true;
 			this->bithday_search_btn->Click += gcnew System::EventHandler(this, &MainWindow::bithday_search_btn_Click);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(289, 61);
+			this->label5->Location = System::Drawing::Point(278, 61);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(103, 13);
+			this->label5->Size = System::Drawing::Size(40, 13);
 			this->label5->TabIndex = 17;
-			this->label5->Text = L"Поиск по столбцу";
+			this->label5->Text = L"Search";
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
 			this->label6->Location = System::Drawing::Point(574, 61);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(101, 13);
+			this->label6->Size = System::Drawing::Size(40, 13);
 			this->label6->TabIndex = 18;
-			this->label6->Text = L"Удалить по ключу";
+			this->label6->Text = L"Delete";
 			// 
 			// Id_txt_delete
 			// 
@@ -332,7 +330,7 @@ namespace DBC {
 			this->Delete_btn->Name = L"Delete_btn";
 			this->Delete_btn->Size = System::Drawing::Size(100, 23);
 			this->Delete_btn->TabIndex = 21;
-			this->Delete_btn->Text = L"Удалить";
+			this->Delete_btn->Text = L"Delete";
 			this->Delete_btn->UseVisualStyleBackColor = true;
 			this->Delete_btn->Click += gcnew System::EventHandler(this, &MainWindow::Delete_btn_Click);
 			// 
@@ -368,23 +366,13 @@ namespace DBC {
 			this->close_btn->UseVisualStyleBackColor = true;
 			this->close_btn->Click += gcnew System::EventHandler(this, &MainWindow::button1_Click);
 			// 
-			// to_csv_btn
-			// 
-			this->to_csv_btn->Location = System::Drawing::Point(93, 282);
-			this->to_csv_btn->Name = L"to_csv_btn";
-			this->to_csv_btn->Size = System::Drawing::Size(75, 23);
-			this->to_csv_btn->TabIndex = 26;
-			this->to_csv_btn->Text = L"to .csv";
-			this->to_csv_btn->UseVisualStyleBackColor = true;
-			this->to_csv_btn->Click += gcnew System::EventHandler(this, &MainWindow::to_csv_btn_Click);
-			// 
 			// to_txt_btn
 			// 
 			this->to_txt_btn->Location = System::Drawing::Point(12, 282);
 			this->to_txt_btn->Name = L"to_txt_btn";
 			this->to_txt_btn->Size = System::Drawing::Size(75, 23);
 			this->to_txt_btn->TabIndex = 27;
-			this->to_txt_btn->Text = L"to .txt";
+			this->to_txt_btn->Text = L"save";
 			this->to_txt_btn->UseVisualStyleBackColor = true;
 			this->to_txt_btn->Click += gcnew System::EventHandler(this, &MainWindow::to_txt_btn_Click);
 			// 
@@ -401,9 +389,9 @@ namespace DBC {
 			this->label9->AutoSize = true;
 			this->label9->Location = System::Drawing::Point(93, 233);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(125, 13);
+			this->label9->Size = System::Drawing::Size(57, 13);
 			this->label9->TabIndex = 31;
-			this->label9->Text = L"Знак между ячейками";
+			this->label9->Text = L"Separator";
 			this->label9->Click += gcnew System::EventHandler(this, &MainWindow::label9_Click);
 			// 
 			// outputFilePath
@@ -418,9 +406,9 @@ namespace DBC {
 			this->label10->AutoSize = true;
 			this->label10->Location = System::Drawing::Point(118, 261);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(104, 13);
+			this->label10->Size = System::Drawing::Size(87, 13);
 			this->label10->TabIndex = 33;
-			this->label10->Text = L"Точка сохранения";
+			this->label10->Text = L"Save point data";
 			// 
 			// MainWindow
 			// 
@@ -436,7 +424,6 @@ namespace DBC {
 			this->Controls->Add(this->label9);
 			this->Controls->Add(this->string_sep);
 			this->Controls->Add(this->to_txt_btn);
-			this->Controls->Add(this->to_csv_btn);
 			this->Controls->Add(this->close_btn);
 			this->Controls->Add(this->refresh);
 			this->Controls->Add(this->dataGridView1);
@@ -462,10 +449,13 @@ namespace DBC {
 			this->Controls->Add(this->CreateTable_btn);
 			this->Controls->Add(this->Create_label);
 			this->Controls->Add(this->Table_txt);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MaximizeBox = false;
 			this->MinimizeBox = false;
 			this->Name = L"MainWindow";
 			this->ShowIcon = false;
+			this->SizeGripStyle = System::Windows::Forms::SizeGripStyle::Hide;
+			this->Load += gcnew System::EventHandler(this, &MainWindow::MainWindow_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -548,8 +538,8 @@ private: System::Void add_btn_Click(System::Object^ sender, System::EventArgs^ e
 		// Проверка совпадения возраста
 		if (providedAge != calculatedAge)
 		{
-			MessageBox::Show("Возраст и дата рождения не совпадают. Проверьте введенные данные.",
-				"Ошибка",
+			MessageBox::Show("Age and date of birth do not match. check the entered data.",
+				"Error",
 				MessageBoxButtons::OK,
 				MessageBoxIcon::Error);
 			return; // Прекращаем выполнение, если данные некорректны
@@ -566,8 +556,8 @@ private: System::Void add_btn_Click(System::Object^ sender, System::EventArgs^ e
 
 		// Выполнение команды
 		sqlCommand->ExecuteNonQuery();
-		MessageBox::Show("Данные успешно добавлены.",
-			"Успех",
+		MessageBox::Show("Data added successfully.",
+			"Success",
 			MessageBoxButtons::OK,
 			MessageBoxIcon::Information);
 
@@ -581,15 +571,15 @@ private: System::Void add_btn_Click(System::Object^ sender, System::EventArgs^ e
 	}
 	catch (SqlException^ ex)
 	{
-		MessageBox::Show("Произошла ошибка: " + ex->Message,
-			"Ошибка",
+		MessageBox::Show("An error has occurred: " + ex->Message,
+			"Error",
 			MessageBoxButtons::OK,
 			MessageBoxIcon::Error);
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Произошла непредвиденная ошибка: " + ex->Message,
-			"Ошибка",
+		MessageBox::Show("An unexpected error occurred: " + ex->Message,
+			"Error",
 			MessageBoxButtons::OK,
 			MessageBoxIcon::Error);
 	}
@@ -747,11 +737,11 @@ private: System::Void to_txt_btn_Click(System::Object^ sender, System::EventArgs
 		writer->Close();
 		reader->Close();
 
-		MessageBox::Show("Данные успешно экспортированы!", "Успех", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		MessageBox::Show("Data exported successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Ошибка: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 }
 private: System::Void string_sep_TextChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -769,7 +759,7 @@ private: System::Void to_csv_btn_Click(System::Object^ sender, System::EventArgs
 		// Проверяем наличие текста в Table_txt и outputFilePath
 		if (String::IsNullOrWhiteSpace(Table_txt->Text) || String::IsNullOrWhiteSpace(outputFilePath->Text))
 		{
-			MessageBox::Show("Имя таблицы или путь для сохранения файла не указаны.", "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			MessageBox::Show("The table name or path to save the file is not specified.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
 
@@ -828,7 +818,7 @@ private: System::Void to_csv_btn_Click(System::Object^ sender, System::EventArgs
 	}
 	catch (Exception^ ex)
 	{
-		MessageBox::Show("Ошибка: " + ex->Message, "Ошибка", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show("Error: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 	}
 	finally
 	{
@@ -841,6 +831,8 @@ private: System::Void to_csv_btn_Click(System::Object^ sender, System::EventArgs
 }
 
 
+private: System::Void MainWindow_Load(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
 #endif // MAINWINDOW_H
