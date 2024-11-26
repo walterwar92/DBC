@@ -1,99 +1,121 @@
-Описание
+Описание / Description
 
-Это приложение для работы с базой данных SQL Server. Оно позволяет выполнять операции, такие как:
+Это приложение теперь также включает функциональность для поиска, удаления данных, обновления таблицы и экспорта данных в CSV или текстовый файл. Поддерживается поиск по имени, возрасту и дате рождения, а также возможность удалить запись по ID. Данные могут быть экспортированы в CSV-файл с поддержкой настраиваемых разделителей.
 
-    Экспорт данных таблицы в файл CSV или текстовый файл.
-    Добавление, поиск, обновление и удаление записей в базе данных.
-    Создание новой таблицы в базе данных.
-
-Функции
-
-    Создание таблицы:
-        Создайте новую таблицу в базе данных с заданной структурой.
-        Используется SQL-запрос для создания таблицы с полями ID, TariffName, Cost и Discount.
-
-    Добавление данных:
-        Добавьте новую запись в таблицу с полями TariffName, Cost, Discount.
-        Происходит проверка ввода данных (например, проверка корректности скидки).
+This application now also includes functionality for searching, deleting data, refreshing the table, and exporting data to CSV or text files. Search by name, age, and date of birth is supported, as well as the ability to delete records by ID. Data can be exported to a CSV file with customizable separators.
+Новые функции / New Features
 
     Поиск данных:
-        Поиск записей по полям TariffName, Cost, Discount.
-        Можно искать как по точным значениям, так и с использованием подстрочных совпадений для строк.
+        Поиск по имени, возрасту и дате рождения с отображением результатов в DataGridView.
+        Поиск осуществляется с использованием оператора LIKE для частичного совпадения.
 
     Удаление данных:
-        Удаление записи по уникальному идентификатору (ID).
-        Подтверждение удаления перед выполнением операции.
+        Удаление записи по ID.
+        Проверка наличия записи с указанным ID перед удалением.
+
+    Обновление таблицы:
+        Кнопка Обновить для обновления отображаемых данных в DataGridView.
 
     Экспорт данных:
-        Экспорт всех данных из выбранной таблицы в файл формата CSV или TXT.
-        Каждый столбец и строка записываются в файл, с учетом разделителей, если они присутствуют в значениях.
+        Экспорт данных из таблицы в текстовый файл или CSV.
+        Возможность настроить разделитель (например, запятую или точку с запятой).
+        Поддержка кавычек вокруг значений, если они содержат разделители.
 
-    Обновление отображаемых данных:
-        Обновление таблицы в DataGridView после выполнения операций вставки, удаления или изменения.
+Как использовать / How to Use
 
-Требования
+    Поиск данных:
+        Введите значение для поиска в одно из полей (Имя, Возраст или Дата Рождения) и нажмите соответствующую кнопку поиска.
+        Результаты будут отображены в DataGridView.
 
-    Microsoft SQL Server.
-    C++/CLI для работы с Windows Forms.
-    .NET Framework (например, версия 4.8).
+    Удаление данных:
+        Введите ID записи, которую хотите удалить, и нажмите кнопку Удалить.
 
-Инструкции по установке
+    Обновление таблицы:
+        Нажмите кнопку Обновить, чтобы перезагрузить и отобразить последние данные в DataGridView.
 
-    Скачайте исходный код.
-    Скомпилируйте проект в Visual Studio.
-    Подключитесь к вашей базе данных SQL Server.
+    Экспорт данных в CSV:
+        Введите путь для сохранения файла и выберите разделитель.
+        Нажмите кнопку Экспорт в CSV, чтобы сохранить данные в файл.
 
-Примечания
+Пример кода / Code Example
 
-    Убедитесь, что у вас есть соответствующие права для создания таблиц и изменения данных в базе данных.
-    Программа работает с одной таблицей, название которой задается пользователем.
+Пример кода для поиска по имени:
 
+String^ searchQuery = "SELECT * FROM " + Table_txt->Text + " WHERE " + "Name" + " LIKE @SearchValue;";
+SqlCommand^ sqlCommand = gcnew SqlCommand(searchQuery, connection);
+sqlCommand->Parameters->AddWithValue("@SearchValue", "%" + Name_txt_search->Text + "%");
+
+Пример кода для удаления записи:
+
+String^ deleteQuery = "DELETE FROM " + Table_txt->Text + " WHERE ID = @ID;";
+SqlCommand^ sqlCommand = gcnew SqlCommand(deleteQuery, connection);
+sqlCommand->Parameters->AddWithValue("@ID", Id_txt_delete->Text);
+
+Пример кода для экспорта данных в CSV:
+
+String^ query = "SELECT * FROM [" + Table_txt->Text + "]";
+SqlCommand^ command = gcnew SqlCommand(query, connection);
+SqlDataReader^ reader = command->ExecuteReader();
+StreamWriter^ writer = gcnew StreamWriter(outputFilePath->Text);
+
+Лицензия / License
+
+Этот проект лицензирован на условиях MIT License.
+English Version
 Description
 
-This application is designed to work with an SQL Server database. It allows you to perform operations such as:
+This application now also includes functionality for searching, deleting data, refreshing the table, and exporting data to CSV or text files. Search by name, age, and date of birth is supported, as well as the ability to delete records by ID. Data can be exported to a CSV file with customizable separators.
+New Features
 
-    Export data from a table to a CSV or text file.
-    Add, search, update, and delete records in the database.
-    Create a new table in the database.
-
-Features
-
-    Create Table:
-        Create a new table in the database with a predefined structure.
-        Uses a SQL query to create a table with columns: ID, TariffName, Cost, and Discount.
-
-    Add Data:
-        Add a new record to the table with fields TariffName, Cost, Discount.
-        Includes validation for user input (e.g., checking if the discount is correct).
-
-    Search Data:
-        Search for records by fields TariffName, Cost, Discount.
-        You can search by exact values or use partial matches for string fields.
+    Data Search:
+        Search by name, age, and date of birth with the results displayed in the DataGridView.
+        The search uses the LIKE operator for partial matches.
 
     Delete Data:
-        Delete a record by its unique ID.
-        A confirmation prompt appears before executing the deletion.
+        Delete records by ID.
+        Checks if a record with the specified ID exists before deletion.
+
+    Refresh Table:
+        Refresh button to reload and display the latest data in DataGridView.
 
     Export Data:
-        Export all data from a selected table to a CSV or TXT file.
-        Each column and row is written to the file, with handling for separators if present in the values.
+        Export data from the table to a text file or CSV.
+        Option to customize the separator (e.g., comma or semicolon).
+        Supports quoting values if they contain the separator.
 
-    Refresh Data Display:
-        Refresh the table in the DataGridView after performing insert, delete, or update operations.
+How to Use
 
-Requirements
+    Data Search:
+        Enter a value for search in any of the fields (Name, Age, or Date of Birth) and click the corresponding search button.
+        Results will be displayed in the DataGridView.
 
-    Microsoft SQL Server.
-    C++/CLI with Windows Forms.
-    .NET Framework (e.g., version 4.8).
+    Delete Data:
+        Enter the ID of the record you wish to delete and click the Delete button.
 
-Installation Instructions
+    Refresh Table:
+        Click the Refresh button to reload and display the latest data in the DataGridView.
 
-    Download the source code.
-    Compile the project in Visual Studio.
-    Connect to your SQL Server database.
+    Export Data to CSV:
+        Enter the path to save the file and choose the separator.
+        Click the Export to CSV button to save the data to a file.
 
-Notes
+Code Example
 
-    Make sure you have appropriate permissions to create tables and modify data in the database.
-    The application works with one table, and the table name is specified by the user.
+Example code for searching by name:
+
+String^ searchQuery = "SELECT * FROM " + Table_txt->Text + " WHERE " + "Name" + " LIKE @SearchValue;";
+SqlCommand^ sqlCommand = gcnew SqlCommand(searchQuery, connection);
+sqlCommand->Parameters->AddWithValue("@SearchValue", "%" + Name_txt_search->Text + "%");
+
+Example code for deleting a record:
+
+String^ deleteQuery = "DELETE FROM " + Table_txt->Text + " WHERE ID = @ID;";
+SqlCommand^ sqlCommand = gcnew SqlCommand(deleteQuery, connection);
+sqlCommand->Parameters->AddWithValue("@ID", Id_txt_delete->Text);
+
+Example code for exporting data to CSV:
+
+String^ query = "SELECT * FROM [" + Table_txt->Text + "]";
+SqlCommand^ command = gcnew SqlCommand(query, connection);
+SqlDataReader^ reader = command->ExecuteReader();
+StreamWriter^ writer = gcnew StreamWriter(outputFilePath->Text);
